@@ -1,0 +1,31 @@
+<div class="flex  w-full flex-row gap-2 flex-wrap items-center justify-center">
+  <!-- <div class="flex flex-col gap-2 items-center justify-center " style="min-width: 200px; max-width: 300px;height: 300px; align-items: center;justify-content: center;display: flex;">
+    <img *ngIf="imgBase64; else noImage" [src]="imgBase64"  style="object-fit: cover; width: 100%; height: 100%;" alt="image" class="image">
+    <ng-template #noImage >
+      <div (click)="onClickInputWrapper()" class="border border-muted rounded-md flex flex-col items-center justify-center"  style="width: 300px; height: 300px;" >
+        <span class="text-muted-foreground" >Agregar imagen</span>
+      </div>
+
+    </ng-template>
+  </div> -->
+  <div class=" w-full flex flex-col gap-2">
+    <div  *ngFor="let file of files" class=" w-full border border-muted rounded-md p-2 cursor-pointer flex flex-row justify-between ">
+      <div   (click)="setImageToView(file)" class="w-full flex flex-col">
+        <span class="text-xs p-1 text-foreground">{{file.name}}</span>
+        <span class="text-xs w-fit rounded-md  p-1 border border-red-600  text-red-600">{{file.size | appFileSize}}</span>
+      </div>
+
+      <button  (click)="deleteImage(file)" type="button" class=" rounded-md p-2 border border-muted hover:bg-gray-200" >
+        <svg-icon src="assets/icons/heroicons/outline/x.svg" [svgClass]="'h-6 w-6 text-red-500'"> </svg-icon>
+
+      </button>
+    </div>
+
+    <div (click)="onClickInputWrapper()" class=" w-full border border-muted rounded-md p-2 cursor-pointer flex flex-row justify-between ">
+      <span class="text-base text-foreground w-full"> Agregar Archivo</span>
+      <svg-icon src="assets/icons/heroicons/outline/plus.svg" [svgClass]="'h-6 w-6 text-foreground'"> </svg-icon>
+      <input (change)="onChangeFile($event)" #inputFile multiple class="file-input" type="file" name="file" hidden>
+    </div>
+
+  </div>
+</div>

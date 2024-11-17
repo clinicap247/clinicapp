@@ -1,0 +1,74 @@
+<div class="flex items-start">
+  <div class="absolute left-[-10px] top-0 w-4 h-4 bg-primary rounded-full"></div>
+  <div class="ml-4  flex flex-col gap-2 w-full cursor-pointer ">
+    <div class="flex  flex-col  gap-1 relative hover:bg-muted p-2" (click)="onExpand()">
+      <div class="flex flex-row gap-2">
+        <h4 class="font-semibold text-foreground cursor-pointer">Medicina General</h4>
+        <span class="text-foreground">-</span>
+        <h4 class="font-semibold text-foreground">Dr Mendez</h4>
+      </div>
+
+      <p class="text-gray-500 text-xs">12/01/2024</p>
+
+      <div class="absolute right-2">
+        <button [ngClass]="{ 'rotate-90': isOpen }"
+          class="pointer-events-none absolute top-1 right-0 flex items-center p-1 text-muted-foreground/50 transition-all duration-500">
+          <svg-icon src="assets/icons/heroicons/solid/chevron-right.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
+        </button>
+      </div>
+
+
+    </div>
+
+
+
+    <div *ngIf="isOpen" class=" ml-4 flex flex-col gap-2">
+      <hr class=" py-2 border-dashed border-border">
+      <div class="flex flex-col gap-2 ">
+        <span class="text-sm font-semibold  text-foreground">Diagnostico</span>
+        <textarea  class="w-full resize-none text-foreground" rows="4" re>
+
+        </textarea>
+        <app-file-input></app-file-input>
+        <hr class=" py-2 border-dashed border-border">
+
+
+
+      </div>
+      <div class="flex flex-col gap-2 ">
+        <span class="text-sm font-semibold  text-foreground">Tratamiento</span>
+        <textarea placeholder="El paciente presenta sintomas de fimosis" class="w-full resize-none" rows="4" re>
+
+        </textarea>
+        <span class="text-sm font-semibold  text-foreground">Medicacion para el tratamiento</span>
+        <textarea placeholder="El paciente presenta sintomas de fimosis" class="w-full resize-none" rows="4" re>
+
+        </textarea>
+
+
+
+        <hr class=" py-2 border-dashed border-border">
+
+
+
+      </div>
+      <div class="flex flex-col gap-2 ">
+        <span class="text-sm font-semibold  text-foreground">Examenes</span>
+        <input type="text" name="" id="">
+        <span class="text-sm font-semibold  text-foreground">Resultados</span>
+        <textarea class="resize-none" ></textarea>
+
+
+        <hr class=" py-2 border-dashed border-border">
+
+
+
+      </div>
+
+
+      <button class="w-full p-2 gap-2 rounded-sm bg-primary text-primary-foreground">
+        Guardar Consulta
+      </button>
+    </div>
+  </div>
+</div>

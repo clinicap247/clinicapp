@@ -1,1 +1,15 @@
-<p>detail-patient works!</p>,
+<div class="grid-cols-3 py-2" >
+  <div class="flex flex-col md:flex-row  px-0 justify-between md:w-full overflow-auto  h-full ">
+    <div class="flex md:w-[25%] flex-col px-4  sm:px-8 overflow-auto scrollbar-thumb-rounded scrollbar-track-rounded grow  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted py-0 md:py-4">
+      <!-- <app-patient-detail-header [patient]="patient" (onEditEvent)="onEditPatient()"></app-patient-detail-header> -->
+       <app-detail-patient-header ></app-detail-patient-header>
+      <!-- <app-patient-detail-profile [patient]="patient"></app-patient-detail-profile> -->
+      <app-detail-patient-profile  ></app-detail-patient-profile>
+    </div>
+    <div class=" flex md:w-[70%] flex-col px-4  sm:px-8 overflow-auto scrollbar-thumb-rounded scrollbar-track-rounded grow  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted py-0 md:py-4">
+      <app-detail-patient-appointment class=" flex w-[%40] overflow-x-clip"></app-detail-patient-appointment>
+    </div>
+
+
+
+</div>

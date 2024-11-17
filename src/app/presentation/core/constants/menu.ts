@@ -3,18 +3,18 @@ import { MenuItem } from '../models/menu.model';
 export class Menu {
   public static pages: MenuItem[] = [
 
-    {
-      group: 'Autenticacion',
-      separator: true,
-      items: [
-        {
-          icon: 'assets/icons/figma-ui/user.svg',
-          label: 'Usuarios',
-          route: '/user/list',
-        },
+    // {
+    //   group: 'Autenticacion',
+    //   separator: true,
+    //   items: [
+    //     {
+    //       icon: 'assets/icons/figma-ui/user.svg',
+    //       label: 'Usuarios',
+    //       route: '/user/list',
+    //     },
 
-      ],
-    },
+    //   ],
+    // },
     {
       group : 'Medicos',
       separator : true,

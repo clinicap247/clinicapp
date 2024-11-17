@@ -1,0 +1,23 @@
+.wrapper{
+  @apply w-full rounded-md border border-border bg-background px-3 py-3 text-xs text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary;
+}
+header{
+  text-align: center;
+}
+
+
+section .row{
+  margin-bottom: 10px;
+  list-style: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+section .row i{
+  font-size: 30px;
+}
+section .details span{
+  font-size: 14px;
+}

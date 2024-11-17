@@ -26,6 +26,8 @@ import { Subject } from 'rxjs';
 import { Appointment } from '../../../../../models/appointment.model';
 import { responseModalFormMapper } from '../../../shared/utils/mappers/response-modal-form/response-modal-form';
 import { InputDateComponent } from '../../../shared/components/form-inputs/input-date/input-date.component';
+import { CustomService } from '../../../../../services/grapql/custom.service';
+import { SelectComponent } from '../../../shared/components/custom-inputs/select/select.component';
 
 @Component({
   selector: 'app-appointment',
@@ -40,16 +42,17 @@ import { InputDateComponent } from '../../../shared/components/form-inputs/input
   templateUrl: './appointment.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppointmentComponent  implements OnInit {
+export class AppointmentComponent implements OnInit {
   ngOnInit(): void {
     this.loadItems();
+    this.onLoadListViews();
   }
   onShowItem: boolean = false;
   private modalService = inject(ModalService);
   private dialogService = inject(DialogService);
   private cdr = inject(ChangeDetectorRef);
   private appointmentsService = inject(AppointmentsService);
-
+  private customService = inject(CustomService);
 
   @ViewChild(DcDirective) dcWrapper!: DcDirective;
 
@@ -67,38 +70,14 @@ export class AppointmentComponent  implements OnInit {
     this.onShowItem = true;
   }
 
-  schedules: ItemList[] = [
-    {
-      id: 1,
-      name: 'Horario-1',
-    },
-    {
-      id: 2,
-      name: 'Horario-2',
-    },
-  ];
+  schedules: ItemList[] = [];
 
-  patients: ItemList[] = [
-    {
-      id: 1,
-      name: 'Paciente-1',
-    },
-    {
-      id: 2,
-      name: 'Paciente-2',
-    },
-    {
-      id: 3,
-      name: 'Paciente-2',
-    },
-    {
-      id: 4,
-      name: 'Paciente-2',
-    },
-  ];
+  patients: ItemList[] = [];
 
-  appointments : Appointment[] = [];
+  doctors: ItemList[] = [];
+  specialties: ItemList[] = [];
 
+  appointments: Appointment[] = [];
 
   onAddAppointment() {
     const addForm: DynamicForm = {
@@ -153,7 +132,7 @@ export class AppointmentComponent  implements OnInit {
 
     notifierDialog.next(0);
 
-    if(!result.isSuccess){
+    if (!result.isSuccess) {
       this.dialogService.showError({
         description: result.error,
       });
@@ -163,11 +142,30 @@ export class AppointmentComponent  implements OnInit {
     this.appointments = result.value;
 
     this.cdr.detectChanges();
+  }
 
+  async onLoadListViews() {
+    const result = await this.customService.loadDoctorsSchedulesPatients();
 
+    if (!result.isSuccess) {
+      this.dialogService.showError({
+        description: result.error,
+      });
+      return;
+    }
+
+    const { doctors, specialties, patients } = result.value;
+
+    // console.log({doctors, specialties, patients});
+    this.doctors = doctors;
+    this.specialties = specialties;
+    this.patients = patients;
+    this.cdr.detectChanges();
   }
 
   onGenerateReport() {
+
+    console.log(this.doctors, this.specialties, this.patients);
     const reportForm: DynamicForm = {
       component: FormTemplateComponent,
       data: {
@@ -175,31 +173,48 @@ export class AppointmentComponent  implements OnInit {
         description: 'Filtros necesarios para generar el reporte',
       },
       dynamicFields: [
-        // {
-        //   component: InputSelectComponent,
-        //   data: {
-        //     title: 'Almacen',
-        //     items: this.warehouses$().map((warehouse) => {
-        //       return {
-        //         id: warehouse.warehouse_id,
-        //         name: warehouse.name,
-        //       };
-        //     }),
-        //   },
-        //   fieldFormControl: new FormControl(),
-        // },
-
         {
           component: InputDateComponent,
           data: {
-            title: 'Inicio',
+            title: 'Fecha',
+            id: 'date',
           },
           fieldFormControl: new FormControl(),
         },
         {
-          component: InputDateComponent,
+          component: InputSelectComponent,
           data: {
-            title: 'Fin',
+            title: 'Especialidades',
+            items: this.specialties,
+            id: 'specialty',
+          },
+          fieldFormControl: new FormControl(),
+        },
+        {
+          component: InputSelectComponent,
+          data: {
+            title: 'Doctores',
+            items: this.doctors.map((doctor: any) => {
+              return {
+                id: doctor.id,
+                name: doctor.user.fullName,
+              };
+            }),
+            id: 'doctor',
+          },
+          fieldFormControl: new FormControl(),
+        },
+        {
+          component: InputSelectComponent,
+          data: {
+            title: 'Pacientes',
+            items: this.patients.map((patient: any) => {
+              return {
+                id: patient.id,
+                name: patient.user.fullName,
+              };
+            }),
+            id: 'patient',
           },
           fieldFormControl: new FormControl(),
         },
@@ -225,10 +240,10 @@ export class AppointmentComponent  implements OnInit {
           const response = responseModalFormMapper(resp);
 
           const responseMapped: any = {
-            product_type_id: response.Producto,
-            init: response.Inicio,
-            end: response.Fin,
-
+            date: response.date,
+            specialty: response.specialty,
+            doctor: response.doctor,
+            patient: response.patient,
           };
 
           const params = Object.keys(responseMapped).reduce(
@@ -244,6 +259,8 @@ export class AppointmentComponent  implements OnInit {
             {}
           );
 
+          console.log(params);
+
           // this.inputFacadeService.createReport(params);
         },
         error: (err) => {
@@ -254,5 +271,4 @@ export class AppointmentComponent  implements OnInit {
         },
       });
   }
-
 }

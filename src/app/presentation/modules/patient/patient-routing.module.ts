@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './pages/list/list.component';
 import { AppointmentComponent } from './pages/appointment/appointment.component';
 import { PatientComponent } from './patient.component';
+import { DetailPatientComponent } from './pages/detail-patient/detail-patient.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path : 'appointments',
         component: AppointmentComponent,
+      },
+      {
+        path : 'detail/:id',
+        component : DetailPatientComponent,
       },
 
       { path: '', redirectTo: 'list', pathMatch: 'full' },

@@ -24,6 +24,7 @@
       <!--Table body-->
       <tbody>
         <tr
+          [routerLink]="['../detail', patient.id]"
           *ngFor="let patient of patients"
           [patient]="patient"
           patient-item
