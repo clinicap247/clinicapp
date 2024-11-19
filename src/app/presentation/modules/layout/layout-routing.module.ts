@@ -3,12 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
-  {
-    path : 'user',
-    component: LayoutComponent,
-    loadChildren : () =>
-    import('../user/user.module').then( m => m.UserModule)
-  },
+
   {
     path : 'patient',
     component : LayoutComponent,
@@ -21,7 +16,7 @@ const routes: Routes = [
     loadChildren : () =>
        import('../doctor/doctor.module').then( m => m.DoctorModule)
   },
-  { path: '', redirectTo: 'user', pathMatch: 'full' },
+  { path: '', redirectTo: 'patient', pathMatch: 'full' },
   { path: '**', redirectTo: 'error/404' },
 ];
 

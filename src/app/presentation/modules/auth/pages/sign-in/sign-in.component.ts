@@ -23,6 +23,7 @@ import {
 } from '../../../../utils/routes.utils';
 import { DialogType, DialogPosition } from '../../../shared/enum/dialog';
 import { Dialog } from '../../../shared/models/dialog';
+import { AuthService } from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -48,8 +49,10 @@ export class SignInComponent implements OnInit {
     private readonly _router: Router
   ) {}
 
-  // private authFacadeService = inject(AuthFacadeService);
-  // private credential = this.authFacadeService.credential;
+
+  private authService = inject(AuthService);
+
+
 
   onClick() {
     console.log('Button clicked');
@@ -60,6 +63,12 @@ export class SignInComponent implements OnInit {
       email: ['', [Validators.required]],
       password: ['', Validators.required],
     });
+
+    if (localStorage.getItem('token')) {
+      this._router.navigate(['/']);
+    }
+
+
 
     // if (this.credential()) {
     //   this._router.navigate(['/warehouse']);
@@ -116,6 +125,10 @@ export class SignInComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    this.authService.login(email, password).subscribe((response) => {
+      this._router.navigate(['/']);
+    });
 
     // this.authFacadeService.login(email, password, this.callback);
   }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, Signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ThemeService } from '../../../../../core/services/theme.service';
@@ -57,7 +57,11 @@ export class ProfileMenuComponent implements OnInit {
       icon: './assets/icons/heroicons/outline/logout.svg',
       link: '/auth',
       action : () => {
-        console.log("Hola mundo");
+        localStorage.removeItem('token');
+        localStorage.removeItem('email');
+
+        const router = inject(Router);
+        router.navigateByUrl('/auth/login');
       }
     },
   ];

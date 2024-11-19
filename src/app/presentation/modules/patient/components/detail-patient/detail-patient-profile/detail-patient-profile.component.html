@@ -8,7 +8,7 @@
 
         <div class="px-2 flex-col flex">
           <span class="text-xs text-muted-foreground">Nombre</span>
-          <span class="text-base text-foreground" >Walter Ronny Ibañez Saucedo</span>
+          <span class="text-base text-foreground" >{{patient.user.fullName}}</span>
           <!-- <span class="text-base text-foreground">{{outputProduct.product_type_id | appProduct}}</span> -->
 
         </div>
@@ -17,7 +17,7 @@
       <div class="flex py-2 flex-col">
         <div class="px-2 flex-col flex">
           <span class="text-xs text-muted-foreground">Direccion</span>
-          <span class="text-base text-foreground" >Omnia Suites</span>
+          <span class="text-base text-foreground" >{{patient.address}}</span>
 
           <!-- <span class="text-base text-foreground">{{outputProduct.product_type_id | appProduct}}</span> -->
 
@@ -27,7 +27,7 @@
       <div class="flex py-2 flex-col">
         <div class="px-2 flex-col flex">
           <span class="text-xs text-muted-foreground">Telefono</span>
-          <span class="text-base text-foreground" >+591 78140498</span>
+          <span class="text-base text-foreground" >{{patient.phone}}</span>
 
           <!-- <span class="text-base text-foreground">{{outputProduct.product_type_id | appProduct}}</span> -->
 
@@ -37,7 +37,7 @@
       <div class="flex py-2 flex-col">
         <div class="px-2 flex-col flex">
           <span class="text-xs text-muted-foreground">Correo</span>
-          <span class="text-base text-foreground" >Walter Ronny Ibañez Saucedo</span>
+          <span class="text-base text-foreground" >{{patient.user.email}}</span>
 
           <!-- <span class="text-base text-foreground">{{outputProduct.product_type_id | appProduct}}</span> -->
 

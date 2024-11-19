@@ -5,54 +5,18 @@
 
     <div class="p-2">
 
-      <div class="relative mb-4 pl-8 border-l-2 border-primary">
-        <!-- Timeline item -->
-       <app-detail-patient-appointment-item></app-detail-patient-appointment-item>
+      <ng-content *ngFor="let appointment of appointments" >
+        <div class="relative mb-4 pl-8 border-l-2 border-primary">
+          <!-- Timeline item -->
+         <app-detail-patient-appointment-item  [appointment]="appointment" ></app-detail-patient-appointment-item>
 
 
-        <!-- Add more timeline items here -->
-      </div>
-      <hr class=" py-2 border-dashed border-border">
-      <div class="relative mb-4 pl-8 border-l-2 border-primary">
-        <!-- Timeline item -->
-       <app-detail-patient-appointment-item></app-detail-patient-appointment-item>
+          <!-- Add more timeline items here -->
+        </div>
+        <hr class=" py-2 border-dashed border-border">
 
+      </ng-content>
 
-        <!-- Add more timeline items here -->
-      </div>
-      <hr class=" py-2 border-dashed border-border">
-      <div class="relative mb-4 pl-8 border-l-2 border-primary">
-        <!-- Timeline item -->
-       <app-detail-patient-appointment-item></app-detail-patient-appointment-item>
-
-
-        <!-- Add more timeline items here -->
-      </div>
-      <hr class=" py-2 border-dashed border-border">
-      <div class="relative mb-4 pl-8 border-l-2 border-primary">
-        <!-- Timeline item -->
-       <app-detail-patient-appointment-item></app-detail-patient-appointment-item>
-
-
-        <!-- Add more timeline items here -->
-      </div>
-      <hr class=" py-2 border-dashed border-border">
-      <div class="relative mb-4 pl-8 border-l-2 border-primary">
-        <!-- Timeline item -->
-       <app-detail-patient-appointment-item></app-detail-patient-appointment-item>
-
-
-        <!-- Add more timeline items here -->
-      </div>
-      <hr class=" py-2 border-dashed border-border">
-      <div class="relative mb-4 pl-8 border-l-2 border-primary">
-        <!-- Timeline item -->
-       <app-detail-patient-appointment-item></app-detail-patient-appointment-item>
-
-
-        <!-- Add more timeline items here -->
-      </div>
-      <hr class=" py-2 border-dashed border-border">
 
     </div>
   </div>

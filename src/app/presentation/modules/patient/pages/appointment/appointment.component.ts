@@ -28,6 +28,7 @@ import { responseModalFormMapper } from '../../../shared/utils/mappers/response-
 import { InputDateComponent } from '../../../shared/components/form-inputs/input-date/input-date.component';
 import { CustomService } from '../../../../../services/grapql/custom.service';
 import { SelectComponent } from '../../../shared/components/custom-inputs/select/select.component';
+import { generateCsv, downloadCSV } from '../../../../utils/reports.utils';
 
 @Component({
   selector: 'app-appointment',
@@ -174,19 +175,11 @@ export class AppointmentComponent implements OnInit {
       },
       dynamicFields: [
         {
-          component: InputDateComponent,
-          data: {
-            title: 'Fecha',
-            id: 'date',
-          },
-          fieldFormControl: new FormControl(),
-        },
-        {
           component: InputSelectComponent,
           data: {
             title: 'Especialidades',
             items: this.specialties,
-            id: 'specialty',
+            id: 'specialityId',
           },
           fieldFormControl: new FormControl(),
         },
@@ -200,7 +193,7 @@ export class AppointmentComponent implements OnInit {
                 name: doctor.user.fullName,
               };
             }),
-            id: 'doctor',
+            id: 'doctorId',
           },
           fieldFormControl: new FormControl(),
         },
@@ -214,7 +207,7 @@ export class AppointmentComponent implements OnInit {
                 name: patient.user.fullName,
               };
             }),
-            id: 'patient',
+            id: 'patientId',
           },
           fieldFormControl: new FormControl(),
         },
@@ -241,9 +234,9 @@ export class AppointmentComponent implements OnInit {
 
           const responseMapped: any = {
             date: response.date,
-            specialty: response.specialty,
-            doctor: response.doctor,
-            patient: response.patient,
+            specialityId: response.specialityId,
+            doctorId: response.doctorId,
+            patientId: response.patientId,
           };
 
           const params = Object.keys(responseMapped).reduce(
@@ -259,7 +252,7 @@ export class AppointmentComponent implements OnInit {
             {}
           );
 
-          console.log(params);
+          this.createReport(params);
 
           // this.inputFacadeService.createReport(params);
         },
@@ -270,5 +263,58 @@ export class AppointmentComponent implements OnInit {
           console.log('Complete');
         },
       });
+  }
+
+
+  async createReport(params : {[key:string] : any}){
+
+    const notifierDialog: Subject<any> = new Subject();
+    this.dialogService.showLoading({
+      description: 'Cargando',
+      listener: notifierDialog,
+    });
+
+
+    const result = await this.appointmentsService.getByParams(params);
+
+    notifierDialog.next(0);
+
+    if(!result.isSuccess){
+      this.dialogService.showError({
+        description : result.error
+      })
+    }
+
+    if(result.value.length === 0){
+      this.dialogService.showAlert({
+        description : 'No se encontraron registros'
+      });
+      return
+    }
+
+    const reportData = result.value.map((appointment: Appointment) => {
+      return {
+        id: appointment.id,
+        date: appointment.appointmentDate,
+        status: appointment.status,
+        patient: appointment.patient.user.fullName,
+        doctor: appointment.doctorShedule.doctor.user.fullName,
+        specialty: appointment.doctorShedule.speciality.name,
+      };
+    });
+
+
+
+
+
+
+    const csvContent = generateCsv(reportData);
+    downloadCSV(csvContent, 'reporte.csv');
+
+
+
+    this.dialogService.ShowSuccess({
+      description : 'Reporte generado'
+    })
   }
 }

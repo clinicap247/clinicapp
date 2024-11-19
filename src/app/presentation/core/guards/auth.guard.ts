@@ -13,8 +13,12 @@ export const authGuard: CanActivateFn = (route, state) => {
   const dialogService = inject(DialogService);
   const router = inject(Router);
 
+  const token = localStorage.getItem('token');
 
-
+  if (!token) {
+    router.navigate(['/auth/login']);
+    return false;
+  }
 
   return true;
 };

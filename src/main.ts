@@ -1,11 +1,13 @@
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app/presentation/app.component';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom, inject } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideStore } from '@ngxs/store';
 import { AppRoutingModule } from './app/presentation/app-routing.module';
 import { environment } from './environments/environment.development';
+import { authInterceptor } from './app/presentation/core/interceptors/auth.interceptor';
+import { errorInterceptor } from './app/presentation/core/interceptors/error.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -20,7 +22,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule, AppRoutingModule),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor,errorInterceptor])),
     provideStore([]),
 
   ],

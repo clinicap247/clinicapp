@@ -1,7 +1,8 @@
 export interface LaboratoryTest {
   id : number;
-  test_type : number;
-  test_dance : string;
+  type : string;
   result : string;
-  consultation_id : number;
 }
+
+
+

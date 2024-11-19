@@ -8,7 +8,6 @@ export interface Appointment {
   slot_number : number;
   status : number;
   patient : Patient;
-  doctor : Doctor;
   doctorShedule : DoctorSchedule;
 
 }

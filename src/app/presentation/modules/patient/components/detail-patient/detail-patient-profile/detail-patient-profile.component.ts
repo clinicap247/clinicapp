@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Patient } from '../../../../../../models/patient.model';
 
 @Component({
   selector: 'app-detail-patient-profile',
@@ -10,4 +11,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './detail-patient-profile.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DetailPatientProfileComponent { }
+export class DetailPatientProfileComponent {
+
+  @Input() patient! :Patient;
+
+ }

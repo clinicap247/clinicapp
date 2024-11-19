@@ -1,3 +1,6 @@
+import { Doctor } from "./doctor.model";
+import { Specialty } from "./specialty.model";
+
 export interface DoctorSchedule {
   id : number;
   day_of_week : string;
@@ -8,7 +11,8 @@ export interface DoctorSchedule {
   slot_duration : string;
   total_slots : number;
   status : number;
-  doctor_id : number;
+  doctor : Doctor;
+  speciality : Specialty
 }
 
 
